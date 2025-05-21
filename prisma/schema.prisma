@@ -15,21 +15,23 @@ datasource db {
 }
 
 enum Category {
-  ELETRONICOS
-  COMIDAS
-  MATERIAS
+  ELECTRONICS
+  FASHION
+  FOODS
+  MATERIALS
 }
 
 model Product {
   id String @id @default(uuid())
-  name String
-  description String
-  availability Boolean
+  name String @unique
+  description String?
   price Float
+  inStock Int @map("in_stock")
+  isAvailable Boolean @default(true) @map("is_available")
   category Category
-  stock Int 
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  tags String[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
   @@map("products")
 
 

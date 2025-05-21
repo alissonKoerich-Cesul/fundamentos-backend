@@ -1,48 +1,66 @@
 import { Injectable } from "@nestjs/common";
+import { ProductsRepository } from "./products.repository";
+import { Category } from "@prisma/client";
 
 interface Product {
-    name: string,
-    model: string,
-    dateManufacture: string,
-    year: string,
-    brand: string,
-    email: string,
-    cpf: string
+    id: string;
+    name: string;
+    description?: string;
+    price: number;
+    inStock: number ;
+    isAvailable : boolean;
+    category : Category;
+    tags: string[];
+    createdAt: Date;
+    updatedAt: Date;
 }
 
-interface CreateProductServiceRequest{
-    name: string,
-      model: string,
-      dateManufacture: string,
-      year: number,
-      brand: string,
-      email: string,
-      cpf: string
+interface CreateProductServiceRequest {
+    name: string;
+    description?: string;
+    price: number;
+    inStock: number ;
+    isAvailable: boolean;
+    category: Category,
+    tags: string[];  
 }
 
 type CreateProductServiceResponse = {
-    product: CreateProductService;
-    
+    product: Product;
 }
+
 
 @Injectable()
 export class CreateProductService {
-    constructor (){}
+    constructor ( private productRepository: ProductsRepository){}
 
         async execute({
-            brand,
             name,
-            cpf,
-            email,
-            dateManufacture,
-            model,
-            year
-
-
-
+            description,
+            price,
+            inStock,
+            isAvailable,
+            category,
+            tags,
         }:CreateProductServiceRequest):Promise<CreateProductServiceResponse>{
-            return new Promise(()=> {});
-        
+            const productWithSameName = await this.productRepository.findByName(name);
 
+            if(productWithSameName){
+                throw new Error("Product");
+            }
+
+            const product = {
+                name,
+                description,
+                price,
+                inStock,
+                isAvailable,
+                category,
+                tags,
+            };
+
+            await this.productRepository.create(product);
+
+            return new Promise( ()=> product);
     }
 }
