@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { ProductsRepository } from "./products.repository";
 import { Category } from "@prisma/client";
 
-interface Product {
+export interface Product {
     id: string;
     name: string;
     description?: string;
@@ -11,8 +11,8 @@ interface Product {
     isAvailable : boolean;
     category : Category;
     tags: string[];
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt:  string | Date | undefined;
+    updatedAt: string | Date | null | undefined;
 }
 
 interface CreateProductServiceRequest {
@@ -46,7 +46,7 @@ export class CreateProductService {
             const productWithSameName = await this.productRepository.findByName(name);
 
             if(productWithSameName){
-                throw new Error("Product");
+                throw new Error("Product exist")
             }
 
             const product = {
@@ -59,8 +59,23 @@ export class CreateProductService {
                 tags,
             };
 
-            await this.productRepository.create(product);
+            const newProduct = await this.productRepository.create(product);
+    
 
-            return new Promise( ()=> product);
+            return {
+                product:{
+                    id: newProduct.id?.toString()||"",
+                    name,
+                    description,
+                    price,
+                    inStock,
+                    isAvailable,
+                    category,
+                    tags,
+                    createdAt: newProduct.createdAt,
+                    updatedAt: newProduct.updatedAt
+
+                }
+            };
     }
 }

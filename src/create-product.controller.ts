@@ -15,8 +15,6 @@ import { CreateProductService } from "./create.product.service";
       isAvailable: z.boolean(),
       category: categoryEnum,
       tags: z.array(z.string()),
-      cpf: z.string().regex(/^\d{11}$/ , {message:'Cpf deve conter exatamente 11 digitos Numericos'})
-      .refine(isValidCPF,{message:"CPF Invalid"})
     
     });
 
@@ -44,7 +42,7 @@ import { CreateProductService } from "./create.product.service";
           
           
           
-          await this.createProduct.execute({
+          const product = await this.createProduct.execute({
             name,
             description,
             price,
@@ -53,6 +51,8 @@ import { CreateProductService } from "./create.product.service";
             category,
             tags,
           });
+
+          return{product};
     
         }
 
