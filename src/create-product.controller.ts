@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Post } from "@nestjs/common";
 import { string, z } from 'zod';
 import { ZodValidationPipe } from './pipes/zod-validation-pipe';
 import { isValidCPF } from "./app.controller";
@@ -55,6 +55,7 @@ import { CreateProductService } from "./create.product.service";
           return{product};
     
         }
+        
 
 
 

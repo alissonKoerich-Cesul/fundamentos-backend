@@ -31,6 +31,12 @@ export class ProductsRepository{
         });
         
     }
+
+    async findRecents(): Promise<Array<Prisma.ProductUncheckedCreateInput> | null>{
+        const modelo = this.prisma.product.findMany();
+        return modelo
+    
+    }
     
 
 }

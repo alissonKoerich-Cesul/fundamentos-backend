@@ -35,8 +35,8 @@ model Product {
   @@map("products")
 
 
-
 }
+
 
 model User {
   id String @id @default(uuid())
@@ -45,4 +45,12 @@ model User {
   @@map("users")
 }
 
+
+
+model Modelo {
+  id String @id @default(uuid())
+  nome String @unique
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime? @updatedAt @map("updated_at")
+}
 
