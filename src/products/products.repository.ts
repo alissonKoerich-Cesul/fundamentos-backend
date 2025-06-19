@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "./prisma.service";
+import { PrismaService } from "../prisma.service";
 import { Prisma } from "@prisma/client";
 
 @Injectable()
@@ -52,4 +52,15 @@ export class ProductsRepository {
       }
     });
   }
+
+async updateInStock(id: string, newInStock: number): Promise<void> {
+  await this.prisma.product.update({
+    where: { id },
+    data: {
+      inStock: newInStock, 
+    },
+  });
 }
+}
+
+

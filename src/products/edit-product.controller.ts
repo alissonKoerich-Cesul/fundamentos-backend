@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, Param, Put } from "@nestjs/common";
 import { z } from "zod";
-import { ZodValidationPipe } from "./pipes/zod-validation-pipe";
+import { ZodValidationPipe } from "../pipes/zod-validation-pipe";
 import { Category } from "@prisma/client";
 import { EditProductService } from "./edit-product.service";
 

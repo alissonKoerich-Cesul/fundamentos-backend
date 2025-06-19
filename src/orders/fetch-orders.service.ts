@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { OrdersRepository } from "./orders.repository";
+import { OrdersRepository } from "src/orders/orders.repository";
 
 @Injectable()
 export class FetchOrdersByUserService {

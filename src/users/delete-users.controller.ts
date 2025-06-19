@@ -1,5 +1,5 @@
 import { Controller, Delete, HttpCode, Param } from "@nestjs/common";
-import { DeleteUserService } from "./delete-users.service";
+import { DeleteUserService } from "./delete-users.service"; 
 
 
 @Controller('/users/:id')
